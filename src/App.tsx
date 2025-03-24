@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { GlobalStyle, Container, BotaoFlutuante } from './styles'
+import ContatoLista from './components/ContatoLista'
+import Sidebar from './containers/SideBar'
+import Cadastro from './containers/cadastro'
 
-function App() {
+const App = () => {
+  const [termoBusca, setTermoBusca] = useState('')
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState('todas')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <GlobalStyle />
+
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Container>
+              <Sidebar
+                termoBusca={termoBusca}
+                setTermoBusca={setTermoBusca}
+                categoriaSelecionada={categoriaSelecionada}
+                setCategoriaSelecionada={setCategoriaSelecionada}
+              />
+
+              <ContatoLista
+                termoBusca={termoBusca}
+                categoriaSelecionada={categoriaSelecionada}
+              />
+            </Container>
+          }
+        />
+        <Route path="/cadastro" element={<Cadastro />} />
+      </Routes>
+    </Router>
+  )
 }
 
-export default App;
+export default App
